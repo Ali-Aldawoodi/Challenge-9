@@ -39,13 +39,15 @@ const questions = [
 ]
 
 // TODO: Create a function to write README file
-.then((response) => {
-    console.log(response)
-
-fs.writeFile('README.md', data, (err) =>
+function writeToFile(filename, data) {
+ 
+fs.writeFile(filename, data, (err) =>
 err ? console.log(err) : console.log('Thanks for the input!')
 ); 
-});
+};
+
+writeToFile();
+
 
 
 // TODO: Create a function to initialize app
@@ -57,4 +59,10 @@ init();
 
 
 
-// 
+// .then((response) => {
+//     console.log(response)
+
+// fs.writeFile('README.md', questions, (err) =>
+// err ? console.log(err) : console.log('Thanks for the input!')
+// ); 
+// });
