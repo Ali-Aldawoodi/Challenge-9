@@ -1,9 +1,77 @@
 // TODO: Include packages needed for this application
 const inquirer = require('inquirer');
-
 const fs = require('fs');
 
+const licenseChoices = ['IBM Public License Version 1.0', 'MIT', 'ISC', 'Mozilla Public License 2.0'];
+
+
+// Create a function that uses each section as a parameter then return each section with literals. 
+function readme({ title, description, installation, usage, license, guidelines, test, github, email }) {
+    const licenseColor = ['IPL_1.0-blue', 'MIT-yellow', 'ISC-blue', 'MPL_2.0-brightgreen']; 
+    
+            const choiceIndex = licenseChoices.indexOf(license)
+            console.log(licenseColor[choiceIndex])
+    /** 
+     * Any time i choose one of the licenses the corresponding badge pops up.
+     * The licenses I want to choose from are ibm, mit, isc, and mozilla.
+     * https://img.shields.io/badge/License-IPL_1.0-blue.svg
+     * https://img.shields.io/badge/License-MIT-yellow.svg
+     * https://img.shields.io/badge/License-ISC-blue.svg
+     * https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg
+     * Use template literal to equate with each license. keep the rest of the link the same. `https...` + ${color} + `.svg`
+     * 
+     * ${blue} = questions.choices[0] 
+     * ${yellow} = questions.choices[1]
+     * ${blue} = questions.choices[2]
+     * ${brightgreen} = questions.choices[3]
+     * var color =
+     * 
+     *   choices: ['IBM Public License Version 1.0', 'MIT', 'ISC', 'Mozilla Public License 2.0' ],
+     * licenseColor = ['IPL_1.0-blue', 'MIT-yellow', 'ISC-blue', 'MPL_2.0-brightgreen']
+     * https://img.shields.io/badge/License- + ${licenseColor} + .svg
+     * 
+     * use indexOf() to 
+     * 
+     * const licenseColor = ['IPL_1.0-blue', 'MIT-yellow', 'ISC-blue', 'MPL_2.0-brightgreen'];
+   const choices = ['IBM Public License Version 1.0', 'MIT', 'ISC', 'Mozilla Public License 2.0' ]
+   const userInput = response.choices
+
+   const choiceIndex = choices.indexOf(userInput)
+   console.log(licenseColor[choiceIndex])
+    */
+    return `
+# ${title}
+
+# Table of Contents
+
+
+# Description
+${description}
+
+# Installation
+${installation}
+
+# Usage
+${usage}
+
+# License
+![](https://img.shields.io/badge/License-${licenseColor[choiceIndex]}.svg)
+
+# Contribution Guidelines
+${guidelines}
+
+# Test
+${test}
+
+# Questions
+${github}
+${email}
+    `
+}
+
+
 // TODO: Create an array of questions for user input
+// I need to create type message and name blocks for each section. 
 const questions = [
     {
         type: 'input',
@@ -11,7 +79,7 @@ const questions = [
         name: 'title'
     },
     {
-        type:'input',
+        type: 'input',
         message: 'What is the description of your project?',
         name: 'description',
     },
@@ -25,6 +93,13 @@ const questions = [
         message: 'What is the usage information?',
         name: 'usage',
     },
+    // How do i add license badges here? Currently I am trying to just insert the image of the badge link next to the choices. 
+    {
+        type: 'list',
+        message: 'What license would you like?',
+        choices: licenseChoices,
+        name: 'license',
+    },
     {
         type: 'input',
         message: 'What are your projects contribution guidelines?',
@@ -35,21 +110,26 @@ const questions = [
         message: 'What are the test intructions?',
         name: 'test',
     },
+    {
+        type: 'input',
+        message: 'What is your github username and link?',
+        name: 'github',
+    },
+    {
+        type: 'input',
+        message: 'What is your email and how can we reach you?',
+        name: 'email',
+    },
 ]
 
 
 // TODO: Create a function to write README file
-
-
-// const data = questions.input
+// fs.writeFile? with the filename and data as parameters as well as err. 
 
 function writeToFile(filename, data) {
-    // var data = questions.input
-    //  filename = 'README.md'
 
- 
-fs.writeFile(filename, data, (err) =>
-err ? console.log(err) : console.log('success')); 
+    fs.writeFile(filename, data, (err) =>
+        err ? console.log(err) : console.log('Thanks for the input! Checkout your README.'));
 };
 
 
@@ -57,15 +137,20 @@ err ? console.log(err) : console.log('success'));
 
 
 // TODO: Create a function to initialize app
+// In this function call inquirer library. Or import. then prompt questions and .then promise the response. set data to readme. call previous function with updated parameters.
 function init() {
     inquirer
-    .prompt(questions)
-    .then((answer) =>{
-        const README = `# ${answer.title}, ${answer.description}, ${answer.installation}, ${answer.usage}, ${answer.guidelines} , ${answer.test}`;
+        .prompt(questions)
+        .then((response) => {
+            console.log(response)
+            const data = readme(response)
 
-        writeToFile('README.md',README, (err) =>
-        err ? console.log(err) : console.log('success'))
-    })
+            
+
+            writeToFile('README.md', data, (err) =>
+                err ? console.log(err) : console.log('nice'))
+        })
+
 
 }
 
@@ -75,10 +160,32 @@ init();
 
 
 
-// .then((response) => {
-//     console.log(response)
 
-// fs.writeFile('README.md', questions, (err) =>
-// err ? console.log(err) : console.log('Thanks for the input!')
-// ); 
-// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ // inquirer
+    // .prompt(questions)
+    // .then((answer) =>{
+    //     const README = `# ${answer.title}, ${answer.description}, ${answer.installation}, ${answer.usage}, ${answer.guidelines} , ${answer.test}`;
+
+    //     writeToFile('README.md',README, (err) =>
+    //     err ? console.log(err) : console.log('success'))
+    // })
+
+    // inquirer
+    // .prompt(questions)
+    // .then(())
