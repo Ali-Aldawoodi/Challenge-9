@@ -43,7 +43,8 @@ function readme({ title, description, installation, usage, license, guidelines, 
 # ${title}
 
 # Table of Contents
-
+Description
+Installation
 
 # Description
 ${description}
